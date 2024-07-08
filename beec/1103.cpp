@@ -1,4 +1,5 @@
 #include <iostream> 
+
 int main() {
     int h1, m1, h2, m2, mins; 
     while (true) {
