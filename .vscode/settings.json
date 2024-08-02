@@ -52,6 +52,11 @@
         "algorithm": "cpp",
         "optional": "cpp",
         "string": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "list": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }
