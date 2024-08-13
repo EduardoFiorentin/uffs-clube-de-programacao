@@ -1,31 +1,30 @@
 #include <iostream>
-#include <vector>
+#include <set>
 #include <algorithm>
 using namespace std; 
 int main() {
-    long n, m, ref;
+    long n, m, ref, index;
     cin >> n >> m;
-    vector<long> tickets, costumers; 
+    multiset<long> tickets, costumers; 
  
     for (int i = 0; i < n; i++) {
         cin >> ref; 
-        tickets.push_back(ref);
+        tickets.insert(ref);
     }
-    sort(tickets.begin(), tickets.end());
     
     for (int i = 0; i < m; i++) {
  
         cin >> ref;
  
-        vector<long>::iterator it = upper_bound(tickets.begin(), tickets.end(), ref);
+        multiset<long>::iterator it = tickets.upper_bound(ref);
         
         if (it == tickets.begin()) {
             cout << -1 << endl; 
- 
-        } else {
+        } 
+        else {
             it--; 
             cout << *it << endl; 
-            tickets.erase(it);
+            tickets.erase(it); 
         }
     }   
 }
