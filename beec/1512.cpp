@@ -1,17 +1,26 @@
-#include <iostream> 
-#include <vector> 
+#include <iostream>
+#include <numeric>
+#include <algorithm>
 
 using namespace std;
 
 int main() {
-    long n, a, b, mult;
     while (true) {
-        cin >> n >> a >> b; 
-        if (!a && !b && !n) break;        
-        for (int i = 1; i <= n; i++) {
-            if (i % a == 0 || i % b == 0) mult++; 
-        }
-
-        cout << mult << endl; 
+        long N, A, B;
+        cin >> N >> A >> B;
+        
+        if (N == 0 && A == 0 && B == 0)
+            break;
+        
+        long ctA = N / A;
+        long ctB = N / B;
+        long lcmAB = std::lcm(A, B);
+        long common = N / lcmAB;
+        
+        long totalPainted = ctA + ctB - common;
+        
+        cout << totalPainted << endl;
     }
+    
+    return 0;
 }

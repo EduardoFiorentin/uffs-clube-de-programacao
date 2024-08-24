@@ -1,5 +1,5 @@
 def solve(map_grid, visited, dir_x, dir_y, pos_x, pos_y, rows, cols):
-    if pos_x < 0 or pos_x >= cols or pos_y < 0 or pos_y >= rows or visited[pos_y][pos_x]:
+    if pos_x < 0 or pos_x >= rows or pos_y < 0 or pos_y >= cols or visited[pos_y][pos_x]:
         return '!'
     print(pos_x, pos_y)
     
@@ -33,17 +33,16 @@ for _ in range(cols):
 
 
 visited = []
-for i in range(rows):
+for i in range(cols):
     line = []
-    for j in range(cols):
+    for j in range(rows):
         line.append(False)
     visited.append(line)
 
 
 dir_x, dir_y = 1, 0
 pos_x, pos_y = 0, 0
-# visited[pos_y][pos_x] = True
 
 result = solve(map_grid, visited, dir_x, dir_y, pos_x, pos_y, rows, cols)
-
 print(result)
+
