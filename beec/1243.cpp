@@ -1,43 +1,125 @@
+// #include <iostream>
+// #include <string>
+// #include <regex>
+
+// using namespace std;
+
+// int solve(string &line) {
+//     regex word_regex(R"(\b[a-zA-Z]+\.?\b)");
+//     auto words_begin = sregex_iterator(line.begin(), line.end(), word_regex);
+//     auto words_end = sregex_iterator();
+//     int word_count = 0;
+//     int total_len = 0;
+
+//     for (sregex_iterator i = words_begin; i != words_end; i++) {
+//         smatch match = *i;
+//         string word = match.str();
+//         if (word.back() == '.') {
+//             word.pop_back();
+//         }
+//         total_len += word.length();
+//         word_count++;
+//     }
+
+//     if (word_count == 0) {
+//         return 250; 
+//     }
+
+//     int av_len = total_len / word_count;
+
+//     if (av_len <= 3) {
+//         return 250;
+//     } else if (av_len <= 5) {
+//         return 500;
+//     } else {
+//         return 1000;
+//     }
+// }
+
+// int main() {
+//     string line;
+
+//     while (getline(cin, line)) {
+//         int dif = solve(line);
+//         cout << dif << endl;
+//     }
+
+//     return 0;
+// }
+
 #include <iostream>
-#include <stdio.h>
 #include <string>
-#include <regex> 
+#include <sstream>
 
-using namespace std; 
+using namespace std;
 
-int main() {
- 
-    string line, word;
-    smatch match;
-    double sum_length = 0, avarage = 0; 
-    int num_words; 
-    regex word_regex(R"(\b[a-zA-Z]+\.?\b)");
+int solve(string line) {
+    int word_count = 0, total_len = 0;
+    bool has_dot = false, invalid_word = false; 
 
-    cin.ignore();
+    istringstream words(line);  
+    string word; 
 
 
-    while (getline(cin, line)) {
-        // cout << line << endl; 
+
+    while (words >> word) {
 
 
-        auto words_begin = sregex_iterator(line.begin(), line.end(), word_regex);
-        auto words_end = sregex_iterator(); 
-        num_words = 0; 
+        invalid_word = false; 
+        has_dot = false; 
 
-        for (auto i = words_begin; i != words_end; ++i) {
-            match = *i;
-            word = match.str();
-            
-             
-            // cout << word << word.size() << endl; 
+        for (char lettr: word) {
 
-            sum_length += word.size(); 
-            num_words++; 
+            if (lettr == '.') {
+                
+                if (!has_dot) has_dot = true; 
+                else {
+                    invalid_word = true;
+                    break; 
+                }
 
+            }
+
+            if (!((lettr >= 'a' && lettr <= 'z') || (lettr >= 'A' && lettr <= 'Z')) && lettr != '.') {
+                invalid_word = true; 
+                break; 
+            }
         }
 
-        if (num_words == 0) cout << 250 << endl;
-        else cout << sum_length / num_words << endl; 
+        if (has_dot && word.size() == 1) invalid_word = true; 
+
+        if (!invalid_word) {
+            word_count++;
+
+            total_len += word.size(); 
+            if (has_dot) total_len--; 
+        }
     }
 
+    if (word_count == 0) {
+        return 250;
+    }
+
+    int av_len = total_len / word_count;
+
+    if (av_len <= 3) {
+        return 250;
+    } 
+    else if (av_len <= 5) {
+        return 500;
+    } 
+    else {
+        return 1000;
+    }
+}
+
+int main() {
+    string line;
+
+    while (getline(cin, line)) {
+        int difficulty = solve(line);
+        cout << difficulty << endl;
+    }
+
+    return 0;
 }
